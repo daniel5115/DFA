@@ -87,9 +87,6 @@ public void askTupla(){ //Método para los estados
     } 
   
   
-  
-}
-  
 
 
 
