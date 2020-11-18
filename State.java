@@ -2,8 +2,8 @@ import javax.swing.*;
 
 
 public class State{
-private int number;
-private boolean initial;
+private int number;//q1
+private boolean initial;//
 private boolean isfinal;
 
 
