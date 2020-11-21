@@ -40,5 +40,5 @@ public void setInitial(boolean a){
 public void setFinal(boolean f){
   isfinal=f;
 }
-
+//algo
 }
