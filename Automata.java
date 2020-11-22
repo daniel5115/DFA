@@ -4,7 +4,7 @@ import java.util.*;
 public class Automata{
 
 int x;//numero de elfos que habra , se le preguntara en la quintupla
-State[] statesAll=new State[x];//maximo 5 states
+State[] statesAll;//maximo 5 states
 int initial;
 int fin,a;
 String  alphabet[]=new String[2];//debido a que solo se permitiran dos caracteres
@@ -20,10 +20,18 @@ public void askTupla(){ //Método para los estados
   String edos,in,fin;
     edos = JOptionPane.showInputDialog("Introduzca el número de estados que se desea:");
     x=Integer.parseInt(edos);
+    statesAll=new State[x];
+    for(int i=0;i<x;i++){
+      statesAll[i].setNumber(x);
+      x++;
+      System.out.println(statesAll[i].getNumber());
+    }
+
     in= JOptionPane.showInputDialog("Introduzca el estado que deseas que sea el edo inicial");
     initial=Integer.parseInt(in);
     fin=JOptionPane.showInputDialog("Introduzca el número de estados finales");
     finalesta=new char[Integer.parseInt(fin)];
+
     for(int i=0; i<finalesta.length; i++)
         {
             String f=JOptionPane.showInputDialog("Estado Final "+i+": ");
