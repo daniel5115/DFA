@@ -33,7 +33,7 @@ public void askTupla(){ //Método para los estados
       }
      catch(Exception e)
      {
-            JOptionPane.showMessageDialog(null,"Error "+e); 
+            JOptionPane.showMessageDialog(null,"Error "+e);
             x=0;
             finalesta=new char[0];
             fi="";
@@ -56,7 +56,7 @@ public void askTupla(){ //Método para los estados
             JOptionPane.showMessageDialog(null,"Caracter "+alfabeto[i]+" ingresado");
         }}
         catch(Exception e){
-            JOptionPane.showMessageDialog(null,"Error "+e); 
+            JOptionPane.showMessageDialog(null,"Error "+e);
             a=0;
             tablatransicion=new int[0][0];
             t1="";
@@ -84,17 +84,16 @@ public void askTupla(){ //Método para los estados
             contador=0;
             tablatransicion=new int[0][0];
         }
-    } 
-  
-  
+    }
 
 
 
 
 
 
-public static void(String args[] ){
-  Automata automat =new Automata()
+
+public static void main(String args[] ){
+  Automata automat =new Automata();
   automat.askTupla();
 }
 
