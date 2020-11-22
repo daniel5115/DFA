@@ -6,8 +6,12 @@ public class Automata{
 int x;//numero de elfos que habra , se le preguntara en la quintupla
 State[] statesAll=new State[x];//maximo 5 states
 int initial;
-int final;
+int fin,a;
 String  alphabet[]=new String[2];//debido a que solo se permitiran dos caracteres
+char[] finalesta,alfabeto;
+String fi,t1;
+ //t1;
+int[][] tablatransicion;
 //buffer readaer
 
 public void askTupla(){ //Método para los estados
@@ -66,6 +70,7 @@ public void askTupla(){ //Método para los estados
   //Método para la tabla de transición
   void transicion(){
         //Usamos un try catch para detectar si hay algun error
+        int contador;
         try{
         contador=1;
         for(int ii=0; ii<x; ii++){
@@ -90,7 +95,7 @@ public void askTupla(){ //Método para los estados
 
 
 
-enneenen
+
 
 public static void main(String args[] ){
   Automata automat =new Automata();
