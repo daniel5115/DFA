@@ -90,7 +90,7 @@ public void askTupla(){ //Método para los estados
 
 
 
-
+enneenen
 
 public static void main(String args[] ){
   Automata automat =new Automata();
