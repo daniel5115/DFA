@@ -5,15 +5,16 @@ public class Automata{
 
 int x;//numero de elfos que habra , se le preguntara en la quintupla
 State[] statesAll;//maximo 5 states
-int initial;
-int fin,a;
-char[] finalesta;
+int initial;//automata inicial
+int fin,a;//automata final
+int[] finalesta;//guarda automatas finales,max 2
 char[] alfabeto=new char[2];//debido a que solo se permitiran dos caracteres
 String fi="";
 char[]cadenaString;
  //t1;
  int[] arrayString;
 int[][] tablatransicion;
+int[]transicion;
 //buffer readaer
 
 public void askTupla(){ //Método para los estados
@@ -37,7 +38,7 @@ public void askTupla(){ //Método para los estados
 
 
     fin=JOptionPane.showInputDialog("Introduzca el número de estados finales");
-    finalesta=new char[Integer.parseInt(fin)];
+    finalesta=new int[Integer.parseInt(fin)];
 
 
     for(int i=0; i<finalesta.length; i++)
@@ -48,9 +49,10 @@ public void askTupla(){ //Método para los estados
             fi=fi+f;
             fina=Integer.parseInt(f);
             statesAll[fina].setFinal(true);
+            finalesta[i]=fina;
             System.out.println(fi);
         }
-    finalesta=fin.toCharArray();
+
 
     alfabeto();
     transicion();
@@ -102,7 +104,7 @@ public void askTupla(){ //Método para los estados
             for(int jj=0; jj<2; jj++){
               String r;
                 r=JOptionPane.showInputDialog("Valor en con automata q"+(ii+1)+" y caracter "+Character.toString(alfabeto[jj]));
-                tablatransicion[jj][ii]=Integer.parseInt(r);
+                tablatransicion[ii][jj]=Integer.parseInt(r);
             }
         }}
         catch(Exception e){
@@ -114,34 +116,73 @@ public void askTupla(){ //Método para los estados
 
   public boolean isCharAll(){
     boolean a=false;
-        arrayString=new int[cadenaString.length];
-    for(int i=0;i<cadenaString.length;i++){
-        if((cadenaString[i]==alfabeto[0])){
-
-          if((cadenaString[i]==alfabeto[1])){
-              arrayString[i]=1;
-
-          }
-        }
-    }
-System.out.println(a);
-    return a;
+    int ab=0;
+  for(int i=0;i<cadenaString.length;i++){
+        if((cadenaString[i]==alfabeto[0])||(cadenaString[i]==alfabeto[1])){
+          ab+=1;
+         }
+       }
+     if(ab==cadenaString.length){
+     a=true;
+   }
+  return a;
  }
 
+ public void convertString(){
+     arrayString=new int[cadenaString.length];
+     char a= alfabeto[0];
+     char b=alfabeto[1];
+     for(int i=0;i<arrayString.length;i++){
+         if(cadenaString[i]==a){
+           arrayString[i]=0;
+
+           }
+          if(cadenaString[i]==b){
+           arrayString[i]=1;
+             }
+             System.out.println( arrayString[i]);
+       }
+     }
+
+public void stringMove(){
+  System.out.println("La transicion del string es:");
+  transicion=new int[arrayString.length];
+    int autR=0;
+  for (int i=0;i<arrayString.length;i++){
+
+  autR=tablatransicion[autR][arrayString[i]];//checar aqui,en i es donde te lleva el resultado
+   transicion[i]=autR;
+   System.out.println(autR);
+
+  }
+}
+
+public boolean comparefinal(){
+  boolean a=false;
+  for(int i=0;i<finalesta.length;i++){
+    if(transicion[(transicion.length)-1]==finalesta[i]){
+       a=true;
+    }
+  }
+return a;
+}
 
 
-     public boolean verifyString(String a){
-        cadenaString=a.toCharArray();
-     System.out.println(alfabeto[0]);
+ public boolean verifyString(String a){
+   boolean ans=false;
+      cadenaString=a.toCharArray();
+      System.out.println(alfabeto[0]);
       System.out.println(alfabeto[1]);
-    if(isCharAll()==false){
-
-      for(int i=0;i<arrayString.length;i++){
-       System.out.println(arrayString[i]);
+      System.out.println(isCharAll());
+   if(isCharAll()==true){
+      convertString();
+      stringMove();
+      if(comparefinal()==true){
+      ans=true;
       }
 
-    }
-     return true;
+     }
+      return ans;
    }
 
 
