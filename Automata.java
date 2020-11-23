@@ -12,6 +12,7 @@ char[] alfabeto=new char[2];//debido a que solo se permitiran dos caracteres
 String fi="";
 char[]cadenaString;
  //t1;
+ int[] arrayString;
 int[][] tablatransicion;
 //buffer readaer
 
@@ -113,11 +114,17 @@ public void askTupla(){ //Método para los estados
 
   public boolean isCharAll(){
     boolean a=false;
+        arrayString=new int[cadenaString.length];
     for(int i=0;i<cadenaString.length;i++){
-        if((cadenaString[i]==alfabeto[0])||cadenaString[i]==alfabeto[1]){
-          a=true;
+        if((cadenaString[i]==alfabeto[0])){
+
+          if((cadenaString[i]==alfabeto[1])){
+              arrayString[i]=1;
+
+          }
         }
     }
+System.out.println(a);
     return a;
  }
 
@@ -125,11 +132,12 @@ public void askTupla(){ //Método para los estados
 
      public boolean verifyString(String a){
         cadenaString=a.toCharArray();
+     System.out.println(alfabeto[0]);
+      System.out.println(alfabeto[1]);
+    if(isCharAll()==false){
 
-    if(isCharAll()==true){
-
-      for(int i=0;i<cadenaString.length;i++){
-
+      for(int i=0;i<arrayString.length;i++){
+       System.out.println(arrayString[i]);
       }
 
     }
