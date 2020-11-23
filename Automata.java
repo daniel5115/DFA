@@ -58,7 +58,10 @@ public void askTupla(){ //Método para los estados
     transicion();
 
       String st=JOptionPane.showInputDialog("Cual sera el string que verificaras :");
-      verifyString(st);
+    boolean strinState =verifyString(st);
+    if(strinState==true){
+  JOptionPane.showMessageDialog(null,"El String fue aceptado satisfactoriamente");
+}else{  JOptionPane.showMessageDialog(null,"El String no fue aceptado");}
 
 
       }
