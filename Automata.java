@@ -7,10 +7,10 @@ int x;//numero de elfos que habra , se le preguntara en la quintupla
 State[] statesAll;//maximo 5 states
 int initial;
 int fin,a;
-String  alphabet[]=new String[2];//debido a que solo se permitiran dos caracteres
-char[] finalesta,alfabeto;
+char[] finalesta;
+char[] alfabeto=new char[2];//debido a que solo se permitiran dos caracteres
 String fi="";
-String t1;
+char[]cadenaString;
  //t1;
 int[][] tablatransicion;
 //buffer readaer
@@ -26,7 +26,7 @@ public void askTupla(){ //Método para los estados
     System.out.println(statesAll.length);
     for(int i=0;i<x;i++){
       statesAll[i]=new State();
-      statesAll[i].setNumber(i);
+      statesAll[i].setNumber(i+1);
 
     }
 
@@ -51,6 +51,13 @@ public void askTupla(){ //Método para los estados
         }
     finalesta=fin.toCharArray();
 
+    alfabeto();
+    transicion();
+
+      String st=JOptionPane.showInputDialog("Cual sera el string que verificaras :");
+      verifyString(st);
+
+
       }
 
   //Método para el ALFABETO
@@ -58,23 +65,28 @@ public void askTupla(){ //Método para los estados
   {
         //Usamos un try catch para detectar si hay error
         try{
-        String al=JOptionPane.showInputDialog("Ingresar letras del alfabeto");
-        a=Integer.parseInt(al);
-        tablatransicion=new int[x][a];
-        for(int i=0; i<a; i++){
-            String t=JOptionPane.showInputDialog("Caracter "+i+" del alfabeto:");
-            t1=t1+t;
+          //alfabeto[0]='a';
+
+
+        for(int i=0; i<2; i++){
+            String t=JOptionPane.showInputDialog("Caracter "+(i+1)+" del alfabeto:");
+           alfabeto[i]=t.charAt(0);
+            System.out.println(alfabeto[i]);
+
         }
-        alfabeto=t1.toCharArray();
+
         for(int i=0; i<alfabeto.length; i++){
             JOptionPane.showMessageDialog(null,"Caracter "+alfabeto[i]+" ingresado");
-        }}
+
+        }
+
+      }
         catch(Exception e){
             JOptionPane.showMessageDialog(null,"Error "+e);
             a=0;
-            tablatransicion=new int[0][0];
-            t1="";
-            alfabeto=new char[0];
+
+
+            //alfabeto=new char[0];
         }
     }
   //Método para la tabla de transición
@@ -83,15 +95,13 @@ public void askTupla(){ //Método para los estados
         int contador;
         try{
         contador=1;
+        tablatransicion=new int[2][statesAll.length];
+
         for(int ii=0; ii<x; ii++){
-            for(int jj=0; jj<a; jj++){
-                String r=JOptionPane.showInputDialog("Ingrese los valores de la tabla de transicion en["+ii+"]["+jj+"]");
-                tablatransicion[ii][jj]=Integer.parseInt(r);
-            }
-        }
-        for(int ii=0; ii<x; ii++){
-            for(int jj=0; jj<a; jj++){
-                JOptionPane.showMessageDialog(null,"Valor en posicion["+ii+"]["+jj+"]="+tablatransicion[ii][jj]);
+            for(int jj=0; jj<2; jj++){
+              String r;
+                r=JOptionPane.showInputDialog("Valor en con automata q"+(ii+1)+" y caracter "+Character.toString(alfabeto[jj]));
+                tablatransicion[jj][ii]=Integer.parseInt(r);
             }
         }}
         catch(Exception e){
@@ -101,6 +111,30 @@ public void askTupla(){ //Método para los estados
         }
     }
 
+  public boolean isCharAll(){
+    boolean a=false;
+    for(int i=0;i<cadenaString.length;i++){
+        if((cadenaString[i]==alfabeto[0])||cadenaString[i]==alfabeto[1]){
+          a=true;
+        }
+    }
+    return a;
+ }
+
+
+
+     public boolean verifyString(String a){
+        cadenaString=a.toCharArray();
+
+    if(isCharAll()==true){
+
+      for(int i=0;i<cadenaString.length;i++){
+
+      }
+
+    }
+     return true;
+   }
 
 
 
