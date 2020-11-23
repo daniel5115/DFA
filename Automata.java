@@ -9,54 +9,56 @@ int initial;
 int fin,a;
 String  alphabet[]=new String[2];//debido a que solo se permitiran dos caracteres
 char[] finalesta,alfabeto;
-String fi,t1;
+String fi="";
+String t1;
  //t1;
 int[][] tablatransicion;
 //buffer readaer
 
 public void askTupla(){ //Método para los estados
   //Usamos un try catch para detectar si existe algun error
-  try{
+
   String edos,in,fin;
+
     edos = JOptionPane.showInputDialog("Introduzca el número de estados que se desea:");
     x=Integer.parseInt(edos);
     statesAll=new State[x];
+    System.out.println(statesAll.length);
     for(int i=0;i<x;i++){
-      statesAll[i].setNumber(x);
-      x++;
-      System.out.println(statesAll[i].getNumber());
+      statesAll[i]=new State();
+      statesAll[i].setNumber(i);
+
     }
 
     in= JOptionPane.showInputDialog("Introduzca el estado que deseas que sea el edo inicial");
     initial=Integer.parseInt(in);
+    statesAll[initial].setInitial(true);
+
+
     fin=JOptionPane.showInputDialog("Introduzca el número de estados finales");
     finalesta=new char[Integer.parseInt(fin)];
 
+
     for(int i=0; i<finalesta.length; i++)
         {
-            String f=JOptionPane.showInputDialog("Estado Final "+i+": ");
+          int fina;
+            String f=JOptionPane.showInputDialog("Estado Final "+i+":");
+
             fi=fi+f;
+            fina=Integer.parseInt(f);
+            statesAll[fina].setFinal(true);
+            System.out.println(fi);
         }
     finalesta=fin.toCharArray();
-        for(int i=0; i<finalesta.length; i++)
-        {
-            JOptionPane.showMessageDialog(null,"Caracter "+finalesta[i]+" ingresado");
-        }
+
       }
-     catch(Exception e)
-     {
-            JOptionPane.showMessageDialog(null,"Error "+e);
-            x=0;
-            finalesta=new char[0];
-            fi="";
-     }
-}
+
   //Método para el ALFABETO
   void alfabeto()
   {
         //Usamos un try catch para detectar si hay error
         try{
-        String al=JOptionPane.showInputDialog("Tamaño del Alfabeto: ");
+        String al=JOptionPane.showInputDialog("Ingresar letras del alfabeto");
         a=Integer.parseInt(al);
         tablatransicion=new int[x][a];
         for(int i=0; i<a; i++){
