@@ -288,7 +288,7 @@ public void askTupla(  String edos,String in,String fin){ //Método para los est
 public void stringMove(){
   System.out.println("La transicion del string es:");
   transicion=new int[arrayString.length];
-    int autR=x;
+    int autR=x-1;
   for (int i=0;i<arrayString.length;i++){
 
   autR=tablatransicion[autR][arrayString[i]];//checar aqui,en i es donde te lleva el resultado
@@ -368,7 +368,16 @@ if (source instanceof JComboBox) {
  }
 }
 public void imprimirText(){
-  automataTa.append("hey");
+  automataTa.append("q0=q"+x);
+  automataTa.append("Alfabeto={"+alfabeto[0]+","+alfabeto[1]+"}");
+  if(finalesta.length==1){
+     automataTa.append("qf={q"+finalesta[0]+"}");
+     }
+     if(finalesta.length==1){
+       automataTa.append("qf={q"+finalesta[0]+",q"+finalesta[1]+"}");
+        }
+
+
 }
 
 public static void main(String args[] ){
