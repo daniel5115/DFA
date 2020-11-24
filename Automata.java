@@ -24,6 +24,7 @@ JButton bacceptState;
 JPanel panel1,panel2,panel3;
 JLabel fin1Lbl,fin2Lbl;
 JTextField car1,car2;
+JTextArea automataTa;
 
 public Automata(){
   super("DFA");
@@ -68,6 +69,8 @@ fin2Lbl=new JLabel("Estado Final 2:");
 
 car1=new JTextField();
 car2=new JTextField();
+
+automataTa = new JTextArea(20,35);
 
 bacceptState=new JButton("Ingresar datos");
 stateCB.addActionListener(this);
@@ -119,6 +122,7 @@ panel3=new JPanel();
 
 
    panel2.add(bacceptState);
+   panel2.add(automataTa);
 
 
 
@@ -181,9 +185,10 @@ public void askTupla(  String edos,String in,String fin){ //Método para los est
   }
 
 
-
-
-    alfabeto();
+     String char1,char2;
+     char1=car1.getText();
+    char2=car2.getText();
+    alfabeto(char1,char2);
     transicion();
 
       String st=JOptionPane.showInputDialog("Cual sera el string que verificaras :");
@@ -196,19 +201,23 @@ public void askTupla(  String edos,String in,String fin){ //Método para los est
       }
 
   //Método para el ALFABETO
-  void alfabeto()
+  void alfabeto(String a1,String b1)
   {
         //Usamos un try catch para detectar si hay error
         try{
           //alfabeto[0]='a';
 
 
-        for(int i=0; i<2; i++){
-            String t=JOptionPane.showInputDialog("Caracter "+(i+1)+" del alfabeto:");
-           alfabeto[i]=t.charAt(0);
-            System.out.println(alfabeto[i]);
 
-        }
+           alfabeto[0]=a1.charAt(0);
+           alfabeto[1]=b1.charAt(0);
+           for(int i=0;i<alfabeto.length;i++){
+               System.out.println(alfabeto[i]);
+           }
+
+
+
+
 
         for(int i=0; i<alfabeto.length; i++){
             JOptionPane.showMessageDialog(null,"Caracter "+alfabeto[i]+" ingresado");
