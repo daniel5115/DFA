@@ -12,15 +12,18 @@ int fin,a;//automata final
 int[] finalesta;//guarda automatas finales,max 2
 char[] alfabeto=new char[2];//debido a que solo se permitiran dos caracteres
 String fi="";
+String st;
 char[]cadenaString;
  //t1;
  int[] arrayString;
 int[][] tablatransicion;
 int[]transicion;
+boolean strinState;
 //buffer readaer
 
 JComboBox stateCB,askFinal,edoiniCB,fin1CB,fin2CB;
 JButton bacceptState;
+JButton btReset;
 JPanel panel1,panel2,panel3;
 JLabel fin1Lbl,fin2Lbl;
 JTextField car1,car2;
@@ -73,6 +76,8 @@ car2=new JTextField();
 automataTa = new JTextArea(20,35);
 
 bacceptState=new JButton("Ingresar datos");
+btReset = new JButton("Comenzar de nuevo");
+btReset.addActionListener(this);
 stateCB.addActionListener(this);
 askFinal.addActionListener(this);
 bacceptState.addActionListener(this);
@@ -122,7 +127,9 @@ panel3=new JPanel();
 
 
    panel2.add(bacceptState);
+   panel2.add(btReset);
    panel2.add(automataTa);
+   panel2.add(new JScrollPane(automataTa));
 
 
 
@@ -132,7 +139,7 @@ panel3=new JPanel();
   setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
   }
 
-public void askTupla(  String edos,String in,String fin){ //Método para los estados
+public void askTupla(  String edos,String in,String fin){ //M�todo para los estados
   //Usamos un try catch para detectar si existe algun error
 
 
@@ -174,7 +181,7 @@ public void askTupla(  String edos,String in,String fin){ //Método para los est
 
     //  fi=fi+f;
       fina=(Integer.parseInt(f)-1);
-      fina1=(Integer.parseInt(f)-1);
+      fina1=(Integer.parseInt(f1)-1);
       statesAll[fina].setFinal(true);
       statesAll[fina1].setFinal(true);
       finalesta[0]=fina;
@@ -191,33 +198,27 @@ public void askTupla(  String edos,String in,String fin){ //Método para los est
     alfabeto(char1,char2);
     transicion();
 
-      String st=JOptionPane.showInputDialog("Cual sera el string que verificaras :");
-    boolean strinState =verifyString(st);
+       st=JOptionPane.showInputDialog("Cual sera el string que verificaras :");
+    strinState =verifyString(st);
     if(strinState==true){
-  JOptionPane.showMessageDialog(null,"El String fue aceptado satisfactoriamente");
-}else{  JOptionPane.showMessageDialog(null,"El String no fue aceptado");}
+  JOptionPane.showMessageDialog(null,"El String fue ACEPTADO debido a quetermin� en un estado de aceptacion");
+}else{  JOptionPane.showMessageDialog(null,"El String fue RECHAZADO debido a que NO termin� en un estado de aceptaci�n");}
    imprimirText();
 
       }
 
-  //Método para el ALFABETO
+  //MÉtodo para el ALFABETO
   void alfabeto(String a1,String b1)
   {
         //Usamos un try catch para detectar si hay error
         try{
           //alfabeto[0]='a';
 
-
-
            alfabeto[0]=a1.charAt(0);
            alfabeto[1]=b1.charAt(0);
            for(int i=0;i<alfabeto.length;i++){
                System.out.println(alfabeto[i]);
            }
-
-
-
-
 
         for(int i=0; i<alfabeto.length; i++){
             JOptionPane.showMessageDialog(null,"Caracter "+alfabeto[i]+" ingresado");
@@ -228,23 +229,21 @@ public void askTupla(  String edos,String in,String fin){ //Método para los est
         catch(Exception e){
             JOptionPane.showMessageDialog(null,"Error "+e);
             a=0;
-
-
             //alfabeto=new char[0];
         }
     }
-  //Método para la tabla de transición
+  //MÉtodo para la tabla de transición
   void transicion(){
         //Usamos un try catch para detectar si hay algun error
         int contador;
         try{
         contador=1;
-        tablatransicion=new int[2][statesAll.length];
+        tablatransicion=new int[statesAll.length][2];
 
         for(int ii=0; ii<x; ii++){
             for(int jj=0; jj<2; jj++){
               String r;
-                r=JOptionPane.showInputDialog("Valor en con automata q"+(ii+1)+" y caracter "+Character.toString(alfabeto[jj]));
+                r=JOptionPane.showInputDialog("Posicion en q"+(ii+1)+" y caracter "+Character.toString(alfabeto[jj]));
                 tablatransicion[ii][jj]=(Integer.parseInt(r)-1);
             }
         }}
@@ -261,13 +260,13 @@ public void askTupla(  String edos,String in,String fin){ //Método para los est
   for(int i=0;i<cadenaString.length;i++){
         if((cadenaString[i]==alfabeto[0])||(cadenaString[i]==alfabeto[1])){
           ab+=1;
-         }
-       }
+            }
+        }
      if(ab==cadenaString.length){
-     a=true;
-   }
-  return a;
- }
+         a=true;
+      }
+      return a;
+    }
 
  public void convertString(){
      arrayString=new int[cadenaString.length];
@@ -323,7 +322,7 @@ return a;
       }
 
      }
-      return ans;
+       return ans;
    }
 
    public void actionPerformed(ActionEvent e) {
@@ -334,6 +333,12 @@ return a;
        edoIni=(String)edoiniCB.getSelectedItem();
        askTupla(edos,edoIni,edosFin);
      }
+     if(e.getSource() == btReset)
+		{
+			//taCode.setText("");
+			automataTa.setText("");
+
+		}
 
 
 }
@@ -355,6 +360,7 @@ public void addPanel(String a){
       fin2Lbl.setVisible(true);
   }
 }
+
 public void itemStateChanged(ItemEvent e){
 String edosFin;
   if(e.getStateChange()==ItemEvent.SELECTED){
@@ -367,16 +373,69 @@ if (source instanceof JComboBox) {
   }
  }
 }
-public void imprimirText(){
-  automataTa.append("q0=q"+initial);
-  automataTa.append("Alfabeto={"+alfabeto[0]+","+alfabeto[1]+"}");
-  if(finalesta.length==1){
-     automataTa.append("qf={q"+(finalesta[0]+1)+"}");
-     }
-     if(finalesta.length==1){
-       automataTa.append("qf={q"+(finalesta[0]+1)+",q"+(finalesta[1]+1)+"}");
-        }
 
+public void printMatriz(){
+  automataTa.append("             "+alfabeto[0]+"          "+alfabeto[1]);
+  automataTa.append("\r\n");
+ int cont=0;
+  for(int i=0;i<x;i++){
+    for(int j=0;j<2;j++){
+       if(cont==0){
+          automataTa.append("q"+(i+1)+"        q"+(tablatransicion[i][j]+1));
+          cont=1;
+        }else{automataTa.append("        q"+(tablatransicion[i][j]+1));}
+
+        //System.out.println("AQUI ESTA"+tablatransicion[i][j]);
+    }
+    cont=0;
+    automataTa.append("\r\n");
+
+
+  }
+
+}
+public String getStates(){
+String states="";
+  for(int i=0;i<x;i++){
+    if(i==(x-1)){
+         states+=("q"+(i+1));
+    }else{states+=("q"+(i+1)+",");}
+
+  }
+  return states;
+}
+public void printMoveString(){
+for(int i=0;i<cadenaString.length;i++){
+       if(i==0){
+         automataTa.append("{q"+(initial+1)+","+cadenaString[i]+"}=q"+(transicion[i]+1)+"\r\n");
+       }else{
+          automataTa.append("{q"+(transicion[i-1]+1)+","+cadenaString[i]+"}=q"+(transicion[i]+1)+"\r\n");
+       }
+  }
+}
+
+public void imprimirText(){
+
+  automataTa.append("AUTOMATA FINITO DETERMINISTA: \n\n");
+    automataTa.append("Q={"+getStates()+"}\r\n\n");
+  automataTa.append("q0=q"+(initial+1)+"\n\n");
+  automataTa.append("Alfabeto={"+alfabeto[0]+","+alfabeto[1]+"}\n\n");
+  if(finalesta.length==1){
+     automataTa.append("F={q"+(finalesta[0]+1)+"}\n\n");
+     }
+     if(finalesta.length==2){
+       automataTa.append("F={q"+(finalesta[0]+1)+",q"+(finalesta[1]+1)+"}"+"\n\n");
+        }
+        automataTa.append("Matriz de transición:\n\n");
+       printMatriz();
+       automataTa.append("\r\n");
+    automataTa.append("String ingresado:"+st+"\r\n");
+    automataTa.append("\r\n");
+      printMoveString();
+
+      if(strinState==true){
+        automataTa.append("El String fue aceptado");
+      }else{automataTa.append("El String fue rechazado");}
 
 }
 
