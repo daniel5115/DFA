@@ -245,7 +245,7 @@ public void askTupla(  String edos,String in,String fin){ //Método para los est
             for(int jj=0; jj<2; jj++){
               String r;
                 r=JOptionPane.showInputDialog("Valor en con automata q"+(ii+1)+" y caracter "+Character.toString(alfabeto[jj]));
-                tablatransicion[ii][jj]=Integer.parseInt(r);
+                tablatransicion[ii][jj]=(Integer.parseInt(r)-1);
             }
         }}
         catch(Exception e){
@@ -288,7 +288,7 @@ public void askTupla(  String edos,String in,String fin){ //Método para los est
 public void stringMove(){
   System.out.println("La transicion del string es:");
   transicion=new int[arrayString.length];
-    int autR=x-1;
+    int autR=initial;
   for (int i=0;i<arrayString.length;i++){
 
   autR=tablatransicion[autR][arrayString[i]];//checar aqui,en i es donde te lleva el resultado
@@ -368,13 +368,13 @@ if (source instanceof JComboBox) {
  }
 }
 public void imprimirText(){
-  automataTa.append("q0=q"+x);
+  automataTa.append("q0=q"+initial);
   automataTa.append("Alfabeto={"+alfabeto[0]+","+alfabeto[1]+"}");
   if(finalesta.length==1){
-     automataTa.append("qf={q"+finalesta[0]+"}");
+     automataTa.append("qf={q"+(finalesta[0]+1)+"}");
      }
      if(finalesta.length==1){
-       automataTa.append("qf={q"+finalesta[0]+",q"+finalesta[1]+"}");
+       automataTa.append("qf={q"+(finalesta[0]+1)+",q"+(finalesta[1]+1)+"}");
         }
 
 
