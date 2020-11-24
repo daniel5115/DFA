@@ -136,7 +136,7 @@ panel3=new JPanel();
   add(panel2);
   setSize(550,600);
   setVisible(true);
-  setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+  setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
   }
 
 public void askTupla(  String edos,String in,String fin){ //M�todo para los estados
