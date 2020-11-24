@@ -1,7 +1,9 @@
+import java.awt.event.*;
 import javax.swing.*;
+import java.awt.*;
 import java.util.*;
 
-public class Automata{
+public class Automata extends JFrame implements ActionListener,ItemListener{
 
 int x;//numero de elfos que habra , se le preguntara en la quintupla
 State[] statesAll;//maximo 5 states
@@ -17,12 +19,120 @@ int[][] tablatransicion;
 int[]transicion;
 //buffer readaer
 
-public void askTupla(){ //Método para los estados
+JComboBox stateCB,askFinal,edoiniCB,fin1CB,fin2CB;
+JButton bacceptState;
+JPanel panel1,panel2,panel3;
+JLabel fin1Lbl,fin2Lbl;
+JTextField car1,car2;
+
+public Automata(){
+  super("DFA");
+
+
+stateCB=new JComboBox();
+stateCB.addItem("1");
+stateCB.addItem("2");
+stateCB.addItem("3");
+stateCB.addItem("4");
+stateCB.addItem("5");
+
+askFinal=new JComboBox();
+askFinal.addItem("1");
+askFinal.addItem("2");
+askFinal.addItemListener(this);
+
+edoiniCB=new JComboBox();
+edoiniCB.addItem("1");
+edoiniCB.addItem("2");
+edoiniCB.addItem("3");
+edoiniCB.addItem("4");
+edoiniCB.addItem("5");
+
+fin1CB=new JComboBox();
+fin1CB.addItem("1");
+fin1CB.addItem("2");
+fin1CB.addItem("3");
+fin1CB.addItem("4");
+fin1CB.addItem("5");
+
+
+fin2CB=new JComboBox();
+fin2CB.addItem("1");
+fin2CB.addItem("2");
+fin2CB.addItem("3");
+fin2CB.addItem("4");
+fin2CB.addItem("5");
+
+fin1Lbl=new JLabel("Estado Final 1:");
+fin2Lbl=new JLabel("Estado Final 2:");
+
+car1=new JTextField();
+car2=new JTextField();
+
+bacceptState=new JButton("Ingresar datos");
+stateCB.addActionListener(this);
+askFinal.addActionListener(this);
+bacceptState.addActionListener(this);
+edoiniCB.addActionListener(this);
+
+
+panel1=new JPanel();
+panel2=new JPanel();
+panel3=new JPanel();
+
+  stateCB.setSelectedIndex(-1);
+  askFinal.setSelectedIndex(-1);
+  edoiniCB.setSelectedIndex(-1);
+//  fin1CB.setSelectedIndex(-1);
+  //fin2CB.setSelectedIndex(-1);
+
+
+  panel1.setLayout(new GridLayout(0,2));
+  panel3.setLayout(new GridLayout(0,2));
+    panel2.setLayout(new FlowLayout());
+
+    panel1.add(new JLabel("Numero de estados:"));
+    panel1.add(stateCB);
+    panel1.add(new JLabel("Edo inicial:"));
+    panel1.add(edoiniCB);
+    panel1.add(new JLabel("Numero de estados finales:"));
+    panel1.add(askFinal);
+
+    panel3.add(fin1Lbl);
+      fin1Lbl.setVisible(false);
+    panel3.add(fin1CB);
+    fin1CB.setVisible(false);
+    panel3.add(fin2Lbl);
+    fin2Lbl.setVisible(false);
+    panel3.add(fin2CB);
+    fin2CB.setVisible(false);
+    panel1.add(new JLabel("Alfabeto:"));
+    panel1.add(new JLabel("2 caracteres"));
+    panel2.add(panel1);
+    panel2.add(panel3);
+    panel1.add(new JLabel("Caracter 1:"));
+    panel1.add(car1);
+    panel1.add(new JLabel( "Caracter 2:"));
+    panel1.add(car2);
+
+
+
+
+   panel2.add(bacceptState);
+
+
+
+  add(panel2);
+  setSize(550,600);
+  setVisible(true);
+  setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+  }
+
+public void askTupla(  String edos,String in,String fin){ //Método para los estados
   //Usamos un try catch para detectar si existe algun error
 
-  String edos,in,fin;
 
-    edos = JOptionPane.showInputDialog("Introduzca el número de estados que se desea:");
+
     x=Integer.parseInt(edos);
     statesAll=new State[x];
     System.out.println(statesAll.length);
@@ -32,26 +142,45 @@ public void askTupla(){ //Método para los estados
 
     }
 
-    in= JOptionPane.showInputDialog("Introduzca el estado que deseas que sea el edo inicial");
-    initial=Integer.parseInt(in);
+
+    initial=(Integer.parseInt(in))-1;
     statesAll[initial].setInitial(true);
 
 
-    fin=JOptionPane.showInputDialog("Introduzca el número de estados finales");
+
     finalesta=new int[Integer.parseInt(fin)];
 
 
-    for(int i=0; i<finalesta.length; i++)
-        {
-          int fina;
-            String f=JOptionPane.showInputDialog("Estado Final "+i+":");
+  if(finalesta.length==1){
+    int fina;
+      String f=(String) fin1CB.getSelectedItem() ;
 
-            fi=fi+f;
-            fina=Integer.parseInt(f);
-            statesAll[fina].setFinal(true);
-            finalesta[i]=fina;
-            System.out.println(fi);
-        }
+    //  fi=fi+f;
+      fina=(Integer.parseInt(f)-1);
+      statesAll[fina].setFinal(true);
+      finalesta[0]=fina;
+      System.out.println(fi);
+
+  }
+  if(finalesta.length==2){
+    int fina,fina1;
+      String f=(String) fin1CB.getSelectedItem() ;
+      String f1=(String) fin2CB.getSelectedItem() ;
+
+
+    //  fi=fi+f;
+      fina=(Integer.parseInt(f)-1);
+      fina1=(Integer.parseInt(f)-1);
+      statesAll[fina].setFinal(true);
+      statesAll[fina1].setFinal(true);
+      finalesta[0]=fina;
+      finalesta[1]=fina1;
+
+      System.out.println(fi);
+
+  }
+
+
 
 
     alfabeto();
@@ -188,14 +317,50 @@ return a;
       return ans;
    }
 
+   public void actionPerformed(ActionEvent e) {
+     String edos,edosFin,edoIni;
+     if(e.getSource()==bacceptState){
+       edos=(String) stateCB.getSelectedItem();
+       edosFin=(String) askFinal.getSelectedItem();
+       edoIni=(String)edoiniCB.getSelectedItem();
+       askTupla(edos,edoIni,edosFin);
+     }
 
 
+}
 
+public void addPanel(String a){
+  if(a=="1"){
+    fin1CB.setVisible(true);
+    fin1Lbl.setVisible(true);
 
+    fin2CB.setVisible(false);
+      fin2Lbl.setVisible(false);
 
+  }
+  if(a=="2"){
+    fin1CB.setVisible(true);
+    fin1Lbl.setVisible(true);
+
+    fin2CB.setVisible(true);
+      fin2Lbl.setVisible(true);
+  }
+}
+public void itemStateChanged(ItemEvent e){
+String edosFin;
+  if(e.getStateChange()==ItemEvent.SELECTED){
+   Object source = e.getSource();
+  //   edosFin=(String) askFinal.getSelectedItem();
+if (source instanceof JComboBox) {
+  JComboBox cb = (JComboBox)source;
+  Object selectedItem = cb.getSelectedItem();
+      addPanel((String)selectedItem);
+  }
+ }
+}
 public static void main(String args[] ){
-  Automata automat =new Automata();
-  automat.askTupla();
+   new Automata();
+
 }
 
 }
